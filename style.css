@@ -1,0 +1,17 @@
+body {
+    text-align: center;
+}
+
+#pokemon {
+    margin-top: 2em;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.name::first-letter {
+    text-transform: uppercase;
+}
+
+img {
+    width: 200px;
+    image-rendering: pixelated;
+}
