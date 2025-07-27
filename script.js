@@ -27,6 +27,7 @@ document.getElementById('submit').addEventListener("click", (e) => {
              <img src="${sprite}" />
          `
         document.getElementById("pokemon").style.display = "inline"
+        document.getElementById("show-more").style.display = "none"
     })
     .catch(error => {
         console.error(error)
@@ -60,6 +61,7 @@ function renderAll() {
                     </div>`
 
                     document.getElementById('pokemon').style.display = "grid"
+                    document.getElementById("show-more").style.display = "inline-block"
                 })
         })
     })
