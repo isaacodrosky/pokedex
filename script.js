@@ -5,6 +5,7 @@ renderAll()
 document.getElementById('show-all').addEventListener("click", (e) => {
     document.getElementById('pokemon').innerHTML = ''
     document.getElementById('pokemonSearch').value = ''
+    currentPage = 'https://pokeapi.co/api/v2/pokemon/'
     renderAll()
 })
 
@@ -28,6 +29,7 @@ document.getElementById('submit').addEventListener("click", (e) => {
          `
         document.getElementById("pokemon").style.display = "inline"
         document.getElementById("show-more").style.display = "none"
+        document.getElementById("show-all").style.display = "inline-block"
     })
     .catch(error => {
         console.error(error)
@@ -62,6 +64,7 @@ function renderAll() {
 
                     document.getElementById('pokemon').style.display = "grid"
                     document.getElementById("show-more").style.display = "inline-block"
+                    document.getElementById("show-all").style.display = "none"
                 })
         })
     })
