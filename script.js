@@ -1,8 +1,8 @@
 renderAll()
 
-// issue: this needs to clear out the 
 document.getElementById('show-all').addEventListener("click", (e) => {
     document.getElementById('pokemon').innerHTML = ''
+    document.getElementById('pokemonSearch').value = ''
     renderAll()
 })
 
@@ -60,6 +60,7 @@ function renderAll() {
                     document.getElementById('pokemon').style.display = "grid"
                 })
         })
+        document.body.innerHTML += `<button id="show-more">Show More</button>`
     })
     .catch(error => {
         console.error(error)
