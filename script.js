@@ -1,3 +1,5 @@
+let currentPage = 'https://pokeapi.co/api/v2/pokemon/'
+
 renderAll()
 
 document.getElementById('show-all').addEventListener("click", (e) => {
@@ -31,9 +33,9 @@ document.getElementById('submit').addEventListener("click", (e) => {
     })
 })
 
-// initial render before search - innerHTML of "pokemon" will be populated with general results from the API - first 20 bc they display 20 at a time
+// initial render before search - innerHTML of "pokemon" will be populated with general results from the API
 function renderAll() {
-   fetch(`https://pokeapi.co/api/v2/pokemon/`)
+   fetch(currentPage)
     .then(res => {
         if (!res.ok) {
             throw Error('Could not display results')
@@ -41,8 +43,8 @@ function renderAll() {
         return res.json()
     })
     .then(data => {
-        const results = data.results
-        results.forEach((item) => {
+        const pokemon = data.results
+        pokemon.forEach((item) => {
             fetch(`${item.url}`)
                 .then(res=> {
                     if (!res.ok) {
@@ -60,10 +62,63 @@ function renderAll() {
                     document.getElementById('pokemon').style.display = "grid"
                 })
         })
-        document.body.innerHTML += `<button id="show-more">Show More</button>`
     })
     .catch(error => {
         console.error(error)
     })
- 
+}
+
+document.getElementById('show-more').addEventListener('click', (e) => {
+    showMore()
+})
+
+//show next set of 20 pokemon
+function showMore() {
+    fetch(currentPage)
+    .then(res => {
+        if (!res.ok) {
+            throw Error('Could not display results')
+        }
+        return res.json()
+    })
+    .then(data => {
+        currentPage = data.next
+
+        fetch(currentPage)
+        .then(res => {
+            if (!res.ok) {
+                throw Error('Could not display results')
+            }
+            return res.json()
+        })
+        .then(data => {
+            const pokemon = data.results
+        pokemon.forEach((item) => {
+            fetch(`${item.url}`)
+                .then(res=> {
+                    if (!res.ok) {
+                        throw Error('Could not display results')
+                    }
+                    return res.json()
+                })
+                .then(data => {
+                    document.getElementById('pokemon').innerHTML += `
+                    <div class="pokemon-container">
+                        <p class="name">${data.name}</p>
+                        <img src="${data.sprites.front_default}" />
+                    </div>`
+                })
+        })
+
+
+
+        })
+        .catch(error => {
+            console.error(error)
+        })
+        
+    })
+    .catch(error => {
+        console.error(error)
+    })
 }
